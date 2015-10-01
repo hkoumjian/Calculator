@@ -22,6 +22,7 @@ class ViewController: UIViewController {
     var isTypingNumber = false
     var firstNumber:Double? = 0
     var secondNumber:Double? = 0
+    var result:Double = 0
     var operation = ""
     
     
@@ -43,24 +44,43 @@ class ViewController: UIViewController {
     }
     @IBAction func equalsTapped(sender: AnyObject) {
         isTypingNumber = false
-        var result = 0.0
         secondNumber = calculatorDisplay.text!.doubleValue
         
         if operation == "+"{
             result = firstNumber! + secondNumber!
         } else if operation == "-"{
             result = firstNumber! - secondNumber!
-        } else if operation == "*"{
+        } else if operation == "x"{
             result = firstNumber! * secondNumber!
-        }
-        else if operation == "/"{
+        }else if operation == "/"{
             result = firstNumber! / secondNumber!
         }
         
+        //firstNumber = result
         calculatorDisplay.text = "\(result)"
     }
     
+    @IBAction func clearTapped(sender: AnyObject) {
+        calculatorDisplay.text = "0"
+        isTypingNumber = false
+    }
     
+    func updateValue(var numberOne: Double, var numberTwo: Double){
+        if firstNumber != 0{
+            numberOne = firstNumber!
+            numberTwo = secondNumber!
+            if operation == "+"{
+                result = numberOne + numberTwo
+            } else if operation == "-"{
+                result = numberOne - numberTwo
+            } else if operation == "x"{
+                result = numberOne * numberTwo
+            } else if operation == "/"{
+                result = numberOne / numberTwo
+            }
+            firstNumber = result
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
