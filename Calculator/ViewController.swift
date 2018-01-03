@@ -10,7 +10,7 @@ import UIKit
 
 extension String{
     var doubleValue: Double{
-        if let number = NSNumberFormatter().numberFromString(self) {
+        if let number = NumberFormatter().number(from: self) {
             return number.doubleValue
         }
         return 0
@@ -27,22 +27,25 @@ class ViewController: UIViewController {
     
     
     @IBOutlet weak var calculatorDisplay: UILabel!
-    @IBAction func numberTapped(sender: AnyObject) {
-        var number = sender.currentTitle
+//    Handles when the user presses a number.
+    @IBAction func numberTapped(_ sender: AnyObject) {
+        let number = sender.currentTitle
         
         if isTypingNumber {
             calculatorDisplay.text = calculatorDisplay.text! + number!!
         } else{
-            calculatorDisplay.text = number
+            calculatorDisplay.text = number!
             isTypingNumber = true
         }
     }
-    @IBAction func calculationTapped(sender: AnyObject) {
+//    Handles when a user presses one of the operations.
+    @IBAction func calculationTapped(_ sender: AnyObject) {
         isTypingNumber = false
         firstNumber = calculatorDisplay.text!.doubleValue
         operation = sender.currentTitle!!
     }
-    @IBAction func equalsTapped(sender: AnyObject) {
+//    Produces the output when the user presses the equals button depending on what the operation was.
+    @IBAction func equalsTapped(_ sender: AnyObject) {
         isTypingNumber = false
         secondNumber = calculatorDisplay.text!.doubleValue
         
@@ -60,12 +63,15 @@ class ViewController: UIViewController {
         calculatorDisplay.text = "\(result)"
     }
     
-    @IBAction func clearTapped(sender: AnyObject) {
+//    Clears the output of the calculator.
+    @IBAction func clearTapped(_ sender: AnyObject) {
         calculatorDisplay.text = "0"
         isTypingNumber = false
     }
     
-    func updateValue(var numberOne: Double, var numberTwo: Double){
+//    Updates output for when a value is already in the calculator.
+    func updateValue(_ numberOne: Double, numberTwo: Double){
+        var numberOne = numberOne, numberTwo = numberTwo
         if firstNumber != 0{
             numberOne = firstNumber!
             numberTwo = secondNumber!
